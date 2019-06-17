@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_client/provider/system_provider.dart';
+import '../provider/system_provider.dart';
+import './search_screen.dart';
 
 class FriendScreen extends StatelessWidget {
   @override
@@ -11,6 +12,17 @@ class FriendScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('联系人'),
           automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchScreen()),
+                );
+              },
+            )
+          ],
           bottom: TabBar(
             tabs: <Widget>[
               Tab(text: '好友'),
@@ -55,8 +67,6 @@ class FriendScreen extends StatelessWidget {
   Widget FriendList(context) {
     return Consumer<SystemProvider>(
       builder: (context, systemData, _) {
-        print(systemData.friends);
-        print("===================");
         return ListView.separated(
           itemCount: systemData.friends.length,
           itemBuilder: (context, index) {

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:talk_client/pages/register_screen.dart';
+import 'package:talk_client/widgets/password_input.dart';
 import '../methods/http.dart';
 import 'package:provider/provider.dart';
 import '../provider/system_provider.dart';
 import './navigator_screen.dart';
+import '../widgets/name_input.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,12 +31,61 @@ class _LoginScreenState extends State<LoginScreen> {
               end: FractionalOffset(1, 1),
             ),
           ),
-          child: ListView(
-            children: <Widget>[
-              nameInput(),
-              passInput(),
-              submitButton(context),
-            ],
+          child: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: ScreenUtil().setHeight(300),
+                ),
+                NameInput(_nameCtrl),
+                Container(
+                  height: ScreenUtil().setHeight(50),
+                ),
+                PassWordInput(_passCtrl),
+                Container(
+                  height: ScreenUtil().setHeight(50),
+                ),
+                Container(
+                  width: ScreenUtil().setWidth(400),
+                  child: RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Text('登录'),
+                    onPressed: () {
+                      _login(context);
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        '还没有注册？',
+                        style: TextStyle(color: Colors.grey[300]),
+                      ),
+                      InkWell(
+                        child: Text(
+                          '去注册',
+                          style: TextStyle(color: Colors.green[700]),
+                        ),
+                        onTap: () async {
+                          var args = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterScreen(),
+                            ),
+                          );
+                          if (args != null) {
+                            _nameCtrl.text = args['nickName'].toString() ?? '';
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -42,8 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login(context) async {
-    if (_nameCtrl.text.isEmpty) return;
-    if (_passCtrl.text.isEmpty) return;
+    if (_nameCtrl.text.isEmpty) {
+      return;
+    }
+    if (_passCtrl.text.isEmpty) {
+      return;
+    }
     var res = await Fetch.post(
       'login',
       data: {'username': _nameCtrl.text, 'password': _passCtrl.text},
@@ -55,50 +110,5 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => NavigatorBar()),
       );
     }
-  }
-
-  Widget passInput() {
-    return Container(
-      child: TextField(
-        controller: _passCtrl,
-        obscureText: true,
-        maxLength: 12,
-        decoration: InputDecoration(
-          labelText: '密码',
-          hintText: '请输入密码',
-          counterText: '',
-          border: InputBorder.none,
-          filled: true,
-          fillColor: Colors.white30,
-        ),
-      ),
-    );
-  }
-
-  Widget nameInput() {
-    return Container(
-      child: TextField(
-        controller: _nameCtrl,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          labelText: '昵称',
-          hintText: '请输入昵称',
-          border: InputBorder.none,
-          filled: true,
-          fillColor: Colors.white30,
-        ),
-      ),
-    );
-  }
-
-  Widget submitButton(context) {
-    return Container(
-      child: RaisedButton(
-        child: Text('登录'),
-        onPressed: () {
-          _login(context);
-        },
-      ),
-    );
   }
 }

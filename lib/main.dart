@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import './provider/system_provider.dart';
-
 import './pages/login_screen.dart';
 import './pages/chat_screen.dart';
 

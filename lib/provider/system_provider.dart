@@ -4,57 +4,95 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../methods/http.dart';
 
 class SystemProvider with ChangeNotifier {
-  String _user_id = '';
-  String _user_name = '';
-  String _user_avatar = '';
-  String _user_phone = '';
-  String _user_email = '';
+  String _id = '';
+  String _name = '';
+  String _avatar = '';
   String _token = '';
   List _groups = [];
   List _friends = [];
+  List _sockets = [];
   int _tabbarIndex = 0;
 
-  String get uid => _user_id;
+  String get uid => _id;
   String get token => _token;
-  String get name => _user_name;
-  String get phone => _user_phone;
-  String get avatar => _user_avatar;
-  String get email => _user_email;
+  String get name => _name;
+  String get avatar => _avatar;
   List get groups => _groups;
   List get friends => _friends;
+  List get sockets => _sockets;
   int get tabbarIndex => _tabbarIndex;
 
   void initApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _id = prefs.getString('uid');
-    String _token = prefs.getString('token');
-    String _name = prefs.getString('username');
-    String _avatar = prefs.getString('useravatar');
-    String _email = prefs.getString('token');
+    String id = prefs.getString('uid');
+    if (id != null) {
+      _id = id;
+    }
+    String name = prefs.getString('username');
+    if (name != null) {
+      _name = name;
+    }
+    String avatar = prefs.getString('useravatar');
+    if (avatar != null) {
+      _avatar = avatar;
+    }
+    String token = prefs.getString('token');
+    if (token != null) {
+      _token = token;
+    }
+    List groups = prefs.getStringList('groups');
+    if (groups != null) {
+      _groups = groups;
+    }
+    List friends = prefs.getStringList('friends');
+    if (friends != null) {
+      _friends = friends;
+    }
+    List sockets = prefs.getStringList('sockets');
+    if (sockets != null) {
+      _sockets = sockets;
+    }
   }
 
   void login(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _user_id = data['_id'];
-    _user_name = data['username'];
-    _user_avatar = data['avatar'];
+    _id = data['_id'];
+    _name = data['username'];
+    _avatar = data['avatar'];
     _token = data['token'];
     _groups = data['groups'];
     _friends = data['friends'];
 
-    prefs.setString('uid', _user_id);
+    prefs.setString('uid', _id);
     prefs.setString('token', _token);
-    prefs.setString('username', _user_name);
-    prefs.setString('useravatar', _user_avatar);
+    prefs.setString('username', _name);
+    prefs.setString('useravatar', _avatar);
     prefs.setStringList('groups', _groups);
     prefs.setStringList('friends', _friends);
+    prefs.setStringList('sockets', _sockets);
+
+    notifyListeners();
   }
 
-  void logout() async {}
-  void loginByToken() async {
+  void logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _token = prefs.getString('token');
-    print(_token);
+    _id = '';
+    _name = '';
+    _avatar = '';
+    _token = '';
+    _groups = [];
+    _friends = [];
+    _sockets = [];
+
+    prefs.setString('uid', _id);
+    prefs.setString('token', _token);
+    prefs.setString('username', _name);
+    prefs.setString('useravatar', _avatar);
+    prefs.setStringList('groups', _groups);
+    prefs.setStringList('friends', _friends);
+    prefs.setStringList('sockets', _sockets);
+
+    notifyListeners();
   }
 
   void changeTabBarIndex(int index) {

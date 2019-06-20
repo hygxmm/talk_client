@@ -32,15 +32,15 @@ class FriendScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            FriendList(context),
-            GroupsList(context),
+            friendList(context),
+            groupsList(context),
           ],
         ),
       ),
     );
   }
 
-  Widget GroupsList(context) {
+  Widget groupsList(context) {
     return Consumer<SystemProvider>(
       builder: (context, systemData, _) {
         return ListView.separated(
@@ -64,14 +64,16 @@ class FriendScreen extends StatelessWidget {
     );
   }
 
-  Widget FriendList(context) {
+  Widget friendList(context) {
     return Consumer<SystemProvider>(
       builder: (context, systemData, _) {
+        print(systemData);
+        print("--------------");
         return ListView.separated(
           itemCount: systemData.friends.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text('${systemData.friends[index]["name"]}'),
+              title: Text('${systemData.friends[index]["username"]}'),
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(
                   '${systemData.friends[index]["avatar"]}',

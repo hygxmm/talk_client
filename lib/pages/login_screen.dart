@@ -105,9 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (res['success']) {
       Provider.of<SystemProvider>(context).login(res['data']);
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => NavigatorBar()),
+        (route) => route == null,
       );
     }
   }

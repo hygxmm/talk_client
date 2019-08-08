@@ -10,7 +10,32 @@ class SystemProvider with ChangeNotifier {
   String _token = '';
   List _groups = [];
   List _friends = [];
-  List _sockets = [];
+  List _sockets = [
+    {
+      'name': '六度空间',
+      'avatar': 'http://localhost:3000/avatar/1.png',
+      'lastMessage': '你好吗',
+      'lastMessageTime': '2019-10-10 12:30:12',
+    },
+    {
+      'name': '六度空间',
+      'avatar': 'http://localhost:3000/avatar/0.png',
+      'lastMessage': '你好吗',
+      'lastMessageTime': '2019-10-10 12:30:12',
+    },
+    {
+      'name': '六度空间',
+      'avatar': 'http://localhost:3000/avatar/1.png',
+      'lastMessage': '你好吗',
+      'lastMessageTime': '2019-10-10 12:30:12',
+    },
+    {
+      'name': '六度空间',
+      'avatar': 'http://localhost:3000/avatar/0.png',
+      'lastMessage': '你好吗',
+      'lastMessageTime': '2019-10-10 12:30:12',
+    }
+  ];
   int _tabbarIndex = 0;
 
   String get uid => _id;

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_client/methods/http.dart';
 import 'package:talk_client/widgets/name_input.dart';
 import 'package:talk_client/widgets/password_input.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

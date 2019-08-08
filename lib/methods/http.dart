@@ -3,7 +3,8 @@ import 'package:dio/dio.dart';
 
 class Fetch {
   static Dio dio;
-  static const String BASEURL = 'http://localhost:3000/api/';
+  // static const String BASEURL = 'http://localhost:3000/api/';
+  static const String BASEURL = 'http://192.168.0.102:3000/api/';
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
 

@@ -6,7 +6,21 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('添加朋友'),
+        title: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide.none,
+            ),
+            filled: true,
+            fillColor: Colors.white30,
+            prefixIcon: Icon(Icons.search),
+            suffix: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {},
+            ),
+          ),
+        ),
         elevation: 0,
       ),
       body: ListView(
